@@ -51,13 +51,11 @@ export const auth = (email, password, isSignup) => {
         if (!isSignup) {
             url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCAK2sTC_g2ctN9KRKmONLuOsNSL8CdM8s';
         }
-
         axios.post(url, authData)
         .then(response => {
             dispatch(authSuccess(response.data.idToken, response.data.localId))
-            dispatch(checkAuthTimeout(response.data.expirationIn))
+            dispatch(checkAuthTimeout(response.data.expiresIn))
         }).catch(err => {
-            console.log(err);
             dispatch(authFail(err.response.data.error))
         })
     }
